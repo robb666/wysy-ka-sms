@@ -3,23 +3,29 @@ from datetime import date, timedelta
 import datetime
 import re
 import boto3
+import time
 
-wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=True)
+
+start_time = time.time()
+
+wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=False, data_only=True)
 ws = wb['BAZA 2014']
 
 today = date.today()
 week_period = today - timedelta(-3)
 
 def dane_rat():
+
     cells = ws['AW8000':'BA20000']
+
     list = []
     for data_raty, kwota, x, y, nr_raty in cells:
         if data_raty.value is not None and re.search('[0-9]', str(data_raty.value)) and \
                                                                     not re.search('[AWV()=.]', str(data_raty.value)):
             data_r = str(data_raty.value)
             termin_płatności = data_r[:10]
-            if datetime.datetime.strptime(termin_płatności, '%Y-%m-%d').date() == week_period and\
-                    int(nr_raty.value) > 1:
+            if datetime.datetime.strptime(termin_płatności, '%Y-%m-%d').date() == week_period and \
+                     nr_raty.value is not None and nr_raty.value > 1:
                 r = data_raty.row
                 kwota_raty = kwota.value
                 nr_polisy = ws.cell(row=r, column=40).value
@@ -38,6 +44,8 @@ def dane_rat():
                     list.append(nr_polisy)
                     list.append(termin_płatności)
                     list.append(kwota_raty)
+
+
 
     return list
 
@@ -73,3 +81,8 @@ def main():
 
 main()
 
+end_time = (time.time() - start_time)
+
+print()
+print()
+print('Czas wykonania: ' + '{:.2f} sek'.format(end_time))

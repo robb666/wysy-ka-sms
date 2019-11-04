@@ -73,18 +73,18 @@ class SMS:
         for i in self.select_cells():
             client = boto3.client('sns', 'eu-west-1')
 
-            client.publish(PhoneNumber=str(self.nr_tel), Message='Dnia ' + str(self.koniec_okresu_bez_sec)
-                                                        + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
-                                                        + str(self.nr_polisy) + ' - ' + str(self.tu) + ', '
-                                                        + str(self.przedmiot_ub)
-                                                        + '. W spr odnowienia prosimy o kontakt z ' + str(self.rozlicz)
-                                                        + '\nhttps://ubezpieczenia-magro.pl')
-
-            print(str(self.nr_tel + ' - Dnia ' + self.koniec_okresu_bez_sec
-                      + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
-                      + self.nr_polisy + ' - ' + self.tu + ', '
-                      + self.przedmiot_ub + '. W spr odnowienia prosimy o kontakt z ' + self.rozlicz
-                      + '\nhttps://ubezpieczenia-magro.pl'))
+            # client.publish(PhoneNumber=str(self.nr_tel), Message='Dnia ' + str(self.koniec_okresu_bez_sec)
+            #                                             + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
+            #                                             + str(self.nr_polisy) + ' - ' + str(self.tu) + ', '
+            #                                             + str(self.przedmiot_ub)
+            #                                             + '. W spr odnowienia prosimy o kontakt z ' + str(self.rozlicz)
+            #                                             + '\nhttps://ubezpieczenia-magro.pl')
+            #
+            # print(str(self.nr_tel + ' - Dnia ' + self.koniec_okresu_bez_sec
+            #           + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
+            #           + self.nr_polisy + ' - ' + self.tu + ', '
+            #           + self.przedmiot_ub + '. W spr odnowienia prosimy o kontakt z ' + self.rozlicz
+            #           + '\nhttps://ubezpieczenia-magro.pl'))
 
 odnowienia = SMS()
 odnowienia.read_excel()
