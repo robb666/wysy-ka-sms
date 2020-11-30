@@ -6,7 +6,8 @@ import re
 import boto3
 
 start_time = time.time()
-print('Wysyłka SMS - odnowienia.')
+
+print('Wysyłka SMS - Przypomnienia o odnowieniach.')
 
 
 class SMS:
@@ -14,9 +15,9 @@ class SMS:
     def __init__(self):
         self.wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=True)
         self.ws = self.wb['BAZA 2014']
-        self.cells = self.ws['G8000':'AV20000']
+        self.cells = self.ws['G9800':'AV24000']
         today = date.today()
-        self.week_period = today - timedelta(-10)
+        self.week_period = today - timedelta(-9)
 
     def read_excel(self):
         for rozlicz, H, I, J, K, L, M, N, O, P, Q, R, nr_tel, email, U, V, marka, model, przedmiot_ub, rok_prod, SU, \
@@ -44,21 +45,21 @@ class SMS:
                 self.koniec_okresu_bez_sec = koniec_okresu[:10]
                 if datetime.datetime.strptime(str(self.koniec_okresu_bez_sec), '%Y-%m-%d').date() == self.week_period:
                     if self.nr_tel is not None and self.rodz_ub != 'życ' and self.przypis is not None:
-                        d = {'Filipiak': 'Ultimatum, tel. 694888197', 'Pankiewicz': 'R. Pankiewiczem, tel. 577839889',
+                        d = {'Filipiak': 'Ultimatum, tel. 694888197', 'Nowakowski': 'K. Nowakowskim, tel. 508280760',
+                             'Pankiewicz': 'R. Pankiewiczem, tel. 577839889', 'Skrzypek': 'S. Skrzypkiem, tel. 508280764',
                              'Wawrzyniak': 'A. Wawrzyniak, tel. 691602675', 'Wołowski': 'M. Wołowskim, tel. 692830084',
-                             'Robert': 'MAGRO, tel. 572810576'}
+                             'MAGRO': 'MAGRO, tel. 602752893', 'Robert': 'MAGRO, tel. 572810576'}
                         if self.rozlicz in d:
                             self.rozlicz = d.get(self.rozlicz)
-                        else:
-                            self.rozlicz = 'MAGRO, tel 602752893'
 
                         di = {'ALL': 'Allianz', 'AXA': 'AXA', 'COM': 'Compensa', 'EPZU': 'PZU', 'GEN': 'Generali',
                               'GOT': 'Gothaer', 'HDI': 'HDI', 'HES': 'Ergo Hestia', 'IGS': 'IGS', 'INT': 'INTER',
-                              'LIN': 'LINK 4', 'PRO': 'Proama', 'PZU': 'PZU', 'RIS': 'InterRisk', 'TUW': 'TUW',
-                              'TUZ': 'TUZ', 'UNI': 'Uniqa', 'WAR': 'Warta', 'WIE': 'Wiener'}
+                              'LIN': 'LINK 4', 'MTU': 'MTU', 'PRO': 'Proama', 'PZU': 'PZU', 'RIS': 'InterRisk',
+                              'TUW': 'TUW', 'TUZ': 'TUZ', 'UNI': 'Uniqa', 'WAR': 'Warta', 'WIE': 'Wiener',
+                              'YCD': 'You Can Drive'}
                         self.tu = di.get(self.tu)
                         self.nr_tel = str(self.nr_tel)
-                        if re.search('^[4]', self.nr_tel):  # numer domowy
+                        if self.nr_tel.startswith('42'):  # numer domowy
                             self.nr_tel = ''
                         if re.search(r'[0-9]', self.nr_tel):
                             self.nr_tel = '48' + self.nr_tel.replace(' ', '').strip('+')
@@ -66,25 +67,26 @@ class SMS:
                                 self.nr_tel = self.nr_tel[:11]
                             if len(self.nr_tel) > 11:
                                 self.nr_tel = self.nr_tel[2:13]
-
+                        # print(self.koniec_okresu_bez_sec)
                         yield self.koniec_okresu_bez_sec
 
     def wysyłka_aws(self):
-        for i in self.select_cells():
+        for _ in self.select_cells():
             client = boto3.client('sns', 'eu-west-1')
+            client.publish(PhoneNumber=str(self.nr_tel), Message='Dnia ' + str(self.koniec_okresu_bez_sec)
+                                                        + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
+                                                        + str(self.nr_polisy) + ' - ' + str(self.tu) + ', '
+                                                        + str(self.przedmiot_ub)
+                                                        + '. W spr odnowienia prosimy o kontakt z ' + str(self.rozlicz)
+                                                        + '\n\nhttps://ubezpieczenia-magro.pl/kalkulatorOC')
 
-            # client.publish(PhoneNumber=str(self.nr_tel), Message='Dnia ' + str(self.koniec_okresu_bez_sec)
-            #                                             + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
-            #                                             + str(self.nr_polisy) + ' - ' + str(self.tu) + ', '
-            #                                             + str(self.przedmiot_ub)
-            #                                             + '. W spr odnowienia prosimy o kontakt z ' + str(self.rozlicz)
-            #                                             + '\nhttps://ubezpieczenia-magro.pl')
-            #
-            # print(str(self.nr_tel + ' - Dnia ' + self.koniec_okresu_bez_sec
-            #           + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
-            #           + self.nr_polisy + ' - ' + self.tu + ', '
-            #           + self.przedmiot_ub + '. W spr odnowienia prosimy o kontakt z ' + self.rozlicz
-            #           + '\nhttps://ubezpieczenia-magro.pl'))
+            print(str(self.nr_tel + ' - Dnia ' + self.koniec_okresu_bez_sec
+                      + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
+                      + self.nr_polisy + ' - ' + self.tu + ', '
+                      + self.przedmiot_ub + '. W spr odnowienia prosimy o kontakt z ' + self.rozlicz
+                      + '\n\nhttps://ubezpieczenia-magro.pl/kalkulatorOC'))
+            print()
+            print()
 
 odnowienia = SMS()
 odnowienia.read_excel()
@@ -96,3 +98,4 @@ print()
 print()
 print('Czas wykonania: {:.0f} sekund'.format(end_time))
 time.sleep(120)
+
