@@ -24,7 +24,6 @@ def dane_rat():
         # if podpis.value == 'MAGRO' or podpis.value == 'Robert':
         #     print(podpis.value)
 
-
             list = []
 
             for data_raty, kwota, x, y, nr_raty in cells:
@@ -57,8 +56,6 @@ def dane_rat():
                                 list.append(nr_polisy)
                                 list.append(termin_płatności)
                                 list.append(kwota_raty)
-
-
 
             return list
 
