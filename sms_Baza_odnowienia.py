@@ -13,9 +13,11 @@ print('Wysyłka SMS - Przypomnienia o odnowieniach.')
 class SMS:
 
     def __init__(self):
-        self.wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=True)
+        # self.wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=True)
+        self.wb = load_workbook(filename="/run/user/1000/gvfs/smb-share:server=10.0.0.4,share=e/Agent baza/2014 BAZA MAGRO.xlsx",
+                                read_only=True)
         self.ws = self.wb['BAZA 2014']
-        self.cells = self.ws['G9800':'AV24000']
+        self.cells = self.ws['G4178':f'AV{self.ws.max_row}']
         today = date.today()
         self.week_period = today - timedelta(-9)
 
@@ -52,11 +54,31 @@ class SMS:
                         if self.rozlicz in d:
                             self.rozlicz = d.get(self.rozlicz)
 
-                        di = {'ALL': 'Allianz', 'AXA': 'AXA', 'COM': 'Compensa', 'EPZU': 'PZU', 'GEN': 'Generali',
-                              'GOT': 'Gothaer', 'HDI': 'HDI', 'HES': 'Ergo Hestia', 'IGS': 'IGS', 'INT': 'INTER',
-                              'LIN': 'LINK 4', 'MTU': 'MTU', 'PRO': 'Proama', 'PZU': 'PZU', 'RIS': 'InterRisk',
-                              'TUW': 'TUW', 'TUZ': 'TUZ', 'UNI': 'Uniqa', 'WAR': 'Warta', 'WIE': 'Wiener',
-                              'YCD': 'You Can Drive'}
+                        di = {'ALL': 'Allianz',
+                              'AXA': 'AXA',
+                              'COM': 'Compensa',
+                              'EIN': 'Euroins',
+                              'EPZU': 'PZU',
+                              'GEN': 'Generali',
+                              'ŻGEN': 'Generali',
+                              'GOT': 'Gothaer',
+                              'HDI': 'HDI',
+                              'HES': 'Ergo Hestia',
+                              'IGS': 'IGS',
+                              'INT': 'INTER',
+                              'LIN': 'LINK 4',
+                              'MTU': 'MTU',
+                              'PRO': 'Proama',
+                              'PZU': 'PZU',
+                              'RIS': 'InterRisk',
+                              'TUW': 'TUW', 'TUZ': 'TUZ',
+                              'UNI': 'Uniqa',
+                              'WAR': 'Warta',
+                              'ŻWAR': 'Warta',
+                              'WIE': 'Wiener',
+                              'YCD': 'You Can Drive',
+                              'None': ''}
+
                         self.tu = di.get(self.tu)
                         self.nr_tel = str(self.nr_tel)
                         if self.nr_tel.startswith('42'):  # numer domowy
@@ -95,7 +117,9 @@ odnowienia.wysyłka_aws()
 
 end_time = time.time() - start_time
 print()
-print()
 print('Czas wykonania: {:.0f} sekund'.format(end_time))
-time.sleep(120)
+print('__________________________________')
+print()
+print()
+# time.sleep(12)
 

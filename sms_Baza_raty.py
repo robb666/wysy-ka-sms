@@ -5,10 +5,13 @@ import re
 import boto3
 import time
 
-
 start_time = time.time()
 
-wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=False, data_only=True)
+print('Wysyłka SMS - Przypomnienia o ratach.')
+
+# wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=False, data_only=True)
+wb = load_workbook(filename="/run/user/1000/gvfs/smb-share:server=10.0.0.4,share=e/Agent baza/2014 BAZA MAGRO.xlsx",
+                   read_only=False, data_only=True)
 ws = wb['BAZA 2014']
 
 today = date.today()
@@ -18,7 +21,7 @@ print('SMS - Przypomnienia o ratach.')
 
 def dane_rat():
 
-    cells_signed = ws['G9800':'H24000']
+    cells_signed = ws['G4178':f'H{ws.max_row}']
     cells = ws['AW9800':'BA24000']
     for podpis, H in cells_signed:
         # if podpis.value == 'MAGRO' or podpis.value == 'Robert':
@@ -93,8 +96,9 @@ def main():
 main()
 
 end_time = (time.time() - start_time)
-
-print()
 print()
 print('Czas wykonania: ' + '{:.2f} sek'.format(end_time))
-time.sleep(10)
+print('______________________________________')
+print()
+print()
+# time.sleep(10)
