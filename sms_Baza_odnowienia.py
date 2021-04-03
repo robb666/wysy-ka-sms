@@ -108,7 +108,7 @@ class SMS:
                       + self.przedmiot_ub + '. W spr odnowienia prosimy o kontakt z ' + self.rozlicz
                       + '\n\nhttps://ubezpieczenia-magro.pl/kalkulatorOC'))
             print()
-            print()
+
 
 odnowienia = SMS()
 odnowienia.read_excel()

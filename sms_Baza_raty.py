@@ -21,46 +21,47 @@ print('SMS - Przypomnienia o ratach.')
 
 def dane_rat():
 
-    cells_signed = ws['G4178':f'H{ws.max_row}']
-    cells = ws['AW9800':'BA24000']
-    for podpis, H in cells_signed:
+    # cells_signed = ws['G4178':f'H{ws.max_row}']
+    cells = ws['AW4178':f'BA{ws.max_row}']
+    # for podpis, H in cells_signed:
+
         # if podpis.value == 'MAGRO' or podpis.value == 'Robert':
         #     print(podpis.value)
 
-            list = []
+    list = []
 
-            for data_raty, kwota, x, y, nr_raty in cells:
-                if data_raty.value is not None and re.search('[0-9]', str(data_raty.value)) and \
-                                                                            not re.search('[AWV()=.]', str(data_raty.value)):
-                    data_r = str(data_raty.value)
-                    termin_płatności = data_r[:10]
-                    if datetime.datetime.strptime(termin_płatności, '%Y-%m-%d').date() == week_period and \
-                        nr_raty.value is not None and nr_raty.value > 1:
+    for data_raty, kwota, x, y, nr_raty in cells:
+        if data_raty.value is not None and re.search('[0-9]', str(data_raty.value)) and \
+                                                                    not re.search('[AWV()=.]', str(data_raty.value)):
+            data_r = str(data_raty.value)
+            termin_płatności = data_r[:10]
+            if datetime.datetime.strptime(termin_płatności, '%Y-%m-%d').date() == week_period and \
+                nr_raty.value is not None and nr_raty.value > 1:
 
-                        r = data_raty.row
-                        kwota_raty = kwota.value
-                        rodzaj = ws.cell(row=r, column=39).value
-                        if rodzaj in 'życ':
-                            pass
-                        else:
-                            nr_polisy = ws.cell(row=r, column=40).value
-                            nr_tel = ws.cell(row=r, column=19).value
-                            tel = str(nr_tel)
-                            if tel.startswith('42'):  # numer domowy
-                                tel = ''
-                            if re.search(r'[0-9]', tel):
-                                tel = '48' + tel.replace(' ', '').strip('+')
-                                if re.search('[a-zA-z;:?,]', tel):
-                                    tel = tel[:11]
-                                if len(tel) > 11:
-                                    tel = tel[2:13]
+                r = data_raty.row
+                kwota_raty = kwota.value
+                rodzaj = ws.cell(row=r, column=39).value
+                if rodzaj in 'życ':
+                    pass
+                else:
+                    nr_polisy = ws.cell(row=r, column=40).value
+                    nr_tel = ws.cell(row=r, column=19).value
+                    tel = str(nr_tel)
+                    if tel.startswith('42'):  # numer domowy
+                        tel = ''
+                    if re.search(r'[0-9]', tel):
+                        tel = '48' + tel.replace(' ', '').strip('+')
+                        if re.search('[a-zA-z;:?,]', tel):
+                            tel = tel[:11]
+                        if len(tel) > 11:
+                            tel = tel[2:13]
 
-                                list.append(tel)
-                                list.append(nr_polisy)
-                                list.append(termin_płatności)
-                                list.append(kwota_raty)
+                        list.append(tel)
+                        list.append(nr_polisy)
+                        list.append(termin_płatności)
+                        list.append(kwota_raty)
 
-            return list
+    return list
 
 
 def wysyłka_aws(list):
@@ -76,14 +77,13 @@ def wysyłka_aws(list):
         client.publish(PhoneNumber=str(tel[n]), Message='Przypomnienie o płatności raty: ' + str(kwota_raty[n]) +
                                                         ' zł, za polisę nr. ' + str(nr_polisy[n]) +
                                                         ' upływającym dnia ' + str(termin_płatności[n]) +
-                                                        '. \n\nhttps://ubezpieczenia-magro.pl/kalkulatorOC')
+                                                        '. \n\nubezpieczenia-magro.pl/kalkulatorOC')
 
         print(str(tel[n]), 'Przypomnienie o płatności raty: ' + str(kwota_raty[n]) +
                                                     ' zł, za polisę nr. ' + str(nr_polisy[n]) +
                                               ' upływającym dnia ' + str(termin_płatności[n]) +
-                                                   '. \n\nhttps://ubezpieczenia-magro.pl/kalkulatorOC')
+                                                   '. \n\nubezpieczenia-magro.pl/kalkulatorOC')
 
-        print()
         print()
         n += 1
 
