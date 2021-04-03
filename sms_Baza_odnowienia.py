@@ -100,13 +100,13 @@ class SMS:
                                                         + str(self.nr_polisy) + ' - ' + str(self.tu) + ', '
                                                         + str(self.przedmiot_ub)
                                                         + '. W spr odnowienia prosimy o kontakt z ' + str(self.rozlicz)
-                                                        + '\n\nhttps://ubezpieczenia-magro.pl/kalkulatorOC')
+                                                        + '\n\nubezpieczenia-magro.pl/kalkulatorOC')
 
             print(str(self.nr_tel + ' - Dnia ' + self.koniec_okresu_bez_sec
                       + ' dobiega końca Twoja polisa ubezpieczeniowa, nr. '
                       + self.nr_polisy + ' - ' + self.tu + ', '
                       + self.przedmiot_ub + '. W spr odnowienia prosimy o kontakt z ' + self.rozlicz
-                      + '\n\nhttps://ubezpieczenia-magro.pl/kalkulatorOC'))
+                      + '\n\nubezpieczenia-magro.pl/kalkulatorOC'))
             print()
 
 
