@@ -1,5 +1,5 @@
 from openpyxl import load_workbook
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import datetime
 import time
 import re
@@ -7,7 +7,8 @@ import boto3
 
 start_time = time.time()
 
-print('Wysyłka SMS - Przypomnienia o odnowieniach.')
+now = datetime.now().strftime("Wysłane dnia %d.%m.%Y o godzinie %H:%M:%S")
+print(f'Wysyłka SMS - Przypomnienia o odnowieniach.\n{now}')
 
 
 class SMS:

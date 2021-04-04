@@ -1,13 +1,13 @@
 from openpyxl import load_workbook
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import datetime
 import re
 import boto3
 import time
 
 start_time = time.time()
-
-print('Wysyłka SMS - Przypomnienia o ratach.')
+now = datetime.now().strftime("Wysłane dnia %d.%m.%Y o godzinie %H:%M:%S")
+print(f'Wysyłka SMS - Przypomnienia o ratach.\n{now}')
 
 # wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=False, data_only=True)
 wb = load_workbook(filename="/run/user/1000/gvfs/smb-share:server=10.0.0.4,share=e/Agent baza/2014 BAZA MAGRO.xlsx",
