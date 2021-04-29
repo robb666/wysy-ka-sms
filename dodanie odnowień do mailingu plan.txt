@@ -1,6 +1,0 @@
-1.
-Zmieniæ zakres kolumn i  (timedelta na 5 dni i 10 dni dla odnowieñ)
-2.
-Rozsz loop
-3.
-Miesza dane koniec polisy z terminem raty!!!
