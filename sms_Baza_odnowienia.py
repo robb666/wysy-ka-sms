@@ -1,12 +1,10 @@
 from openpyxl import load_workbook
 from datetime import date, datetime, timedelta
-import datetime
 import time
 import re
 import boto3
 
 start_time = time.time()
-
 now = datetime.now().strftime("Wysłane dnia %d.%m.%Y o godzinie %H:%M:%S")
 print(f'Wysyłka SMS - Przypomnienia o odnowieniach.\n{now}')
 
@@ -46,7 +44,7 @@ class SMS:
 
                 koniec_okresu = str(self.koniec)
                 self.koniec_okresu_bez_sec = koniec_okresu[:10]
-                if datetime.datetime.strptime(str(self.koniec_okresu_bez_sec), '%Y-%m-%d').date() == self.week_period:
+                if datetime.strptime(str(self.koniec_okresu_bez_sec), '%Y-%m-%d').date() == self.week_period:
                     if self.nr_tel is not None and self.rodz_ub != 'życ' and self.przypis is not None:
                         d = {'Filipiak': 'Ultimatum, tel. 694888197', 'Nowakowski': 'K. Nowakowskim, tel. 508280760',
                              'Pankiewicz': 'R. Pankiewiczem, tel. 577839889', 'Skrzypek': 'S. Skrzypkiem, tel. 508280764',
@@ -117,10 +115,8 @@ odnowienia.select_cells()
 odnowienia.wysyłka_aws()
 
 end_time = time.time() - start_time
-print()
-print('Czas wykonania: {:.0f} sekund'.format(end_time))
+print('\nCzas wykonania: {:.0f} sekund'.format(end_time))
+print('\n\n')
 print('__________________________________')
-print()
-print()
 # time.sleep(12)
 

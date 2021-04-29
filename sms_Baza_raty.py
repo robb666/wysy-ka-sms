@@ -1,6 +1,5 @@
 from openpyxl import load_workbook
 from datetime import date, datetime, timedelta
-import datetime
 import re
 import boto3
 import time
@@ -35,7 +34,7 @@ def dane_rat():
                                                                     not re.search('[AWV()=.]', str(data_raty.value)):
             data_r = str(data_raty.value)
             termin_płatności = data_r[:10]
-            if datetime.datetime.strptime(termin_płatności, '%Y-%m-%d').date() == week_period and \
+            if datetime.strptime(termin_płatności, '%Y-%m-%d').date() == week_period and \
                 nr_raty.value is not None and nr_raty.value > 1:
 
                 r = data_raty.row
@@ -96,9 +95,9 @@ def main():
 main()
 
 end_time = (time.time() - start_time)
-print()
-print('Czas wykonania: ' + '{:.2f} sek'.format(end_time))
+
+print('\nCzas wykonania: ' + '{:.2f} sek'.format(end_time))
+print('\n\n')
 print('______________________________________')
-print()
-print()
+
 # time.sleep(10)
