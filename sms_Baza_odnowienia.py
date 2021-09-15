@@ -13,7 +13,7 @@ class SMS:
 
     def __init__(self):
         # self.wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=True)
-        self.wb = load_workbook(filename="/run/user/1000/gvfs/smb-share:server=10.0.0.4,share=e/Agent baza/2014 BAZA MAGRO.xlsx",
+        self.wb = load_workbook(filename="/run/user/1000/gvfs/smb-share:server=192.168.1.12,share=e/Agent baza/2014 BAZA MAGRO.xlsx",
                                 read_only=True)
         self.ws = self.wb['BAZA 2014']
         self.cells = self.ws['G4178':f'AV{self.ws.max_row}']
@@ -48,7 +48,8 @@ class SMS:
                     if self.nr_tel is not None and self.rodz_ub != 'życ' and self.przypis is not None:
                         d = {'Filipiak': 'Ultimatum, tel. 694888197', 'Nowakowski': 'K. Nowakowskim, tel. 508280760',
                              'Pankiewicz': 'R. Pankiewiczem, tel. 577839889', 'Skrzypek': 'S. Skrzypkiem, tel. 508280764',
-                             'Wawrzyniak': 'A. Wawrzyniak, tel. 691602675', 'Wołowski': 'M. Wołowskim, tel. 692830084',
+                             'Wawrzyniak': 'A. Wawrzyniak, tel. 691602675', 'Włodarczyk': 'M. Włodarczyk, tel. 502934091',
+                             'Wołowski': 'M. Wołowskim, tel. 692830084',
                              'MAGRO': 'MAGRO, tel. 602752893', 'Robert': 'MAGRO, tel. 572810576'}
                         if self.rozlicz in d:
                             self.rozlicz = d.get(self.rozlicz)
