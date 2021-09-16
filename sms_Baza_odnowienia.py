@@ -46,8 +46,8 @@ class SMS:
                 self.koniec_okresu_bez_sec = koniec_okresu[:10]
                 if datetime.strptime(str(self.koniec_okresu_bez_sec), '%Y-%m-%d').date() == self.week_period:
                     if self.nr_tel is not None and self.rodz_ub != 'życ' and self.przypis is not None:
-                        d = {'Filipiak': 'Ultimatum, tel. 694888197', 'Nowakowski': 'K. Nowakowskim, tel. 508280760',
-                             'Pankiewicz': 'R. Pankiewiczem, tel. 577839889', 'Skrzypek': 'S. Skrzypkiem, tel. 508280764',
+                        d = {'Filipiak': 'Ultimatum, tel. 694888197', 'Nowakowski': 'MAGRO, tel. 602752893',
+                             'Pankiewicz': 'R. Pankiewiczem, tel. 577839889', 'Skrzypek': 'MAGRO, tel. 602752893',
                              'Wawrzyniak': 'A. Wawrzyniak, tel. 691602675', 'Włodarczyk': 'M. Włodarczyk, tel. 502934091',
                              'Wołowski': 'M. Wołowskim, tel. 692830084',
                              'MAGRO': 'MAGRO, tel. 602752893', 'Robert': 'MAGRO, tel. 572810576'}
