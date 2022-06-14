@@ -56,6 +56,7 @@ class SMS:
 
                         di = {'ALL': 'Allianz',
                               'AXA': 'AXA',
+                              'BAL': 'Balcia',
                               'COM': 'Compensa',
                               'EIN': 'Euroins',
                               'EPZU': 'PZU',
