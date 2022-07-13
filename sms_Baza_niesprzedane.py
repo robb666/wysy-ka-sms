@@ -5,10 +5,10 @@ import time
 import re
 import boto3
 
-wb = load_workbook(filename="M:/Agent baza/DO wznowienia.xlsx", read_only=True)
+wb = load_workbook(filename="M:/Agent baza/DO wznowienia.xlsm", read_only=True)
 ws = wb['do oferty']
 
-# wb = load_workbook(filename="C:/Users/ROBERT/Desktop/TESTY.xlsx", read_only=True)
+# wb = load_workbook(filename="C:/Users/ROBERT/Desktop/TESTY.xlsm", read_only=True)
 # ws = wb['Arkusz1']
 
 today = date.today()

@@ -8,8 +8,8 @@ start_time = time.time()
 now = datetime.now().strftime("Wysłane dnia %d.%m.%Y o godzinie %H:%M:%S")
 print(f'Wysyłka SMS - Przypomnienia o ratach.\n{now}')
 
-# wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsx", read_only=False, data_only=True)
-wb = load_workbook(filename="/run/user/1000/gvfs/smb-share:server=192.168.1.12,share=e/Agent baza/2014 BAZA MAGRO.xlsx",
+# wb = load_workbook(filename="M:/Agent baza/2014 BAZA MAGRO.xlsm", read_only=False, data_only=True)
+wb = load_workbook(filename="/run/user/1000/gvfs/smb-share:server=192.168.1.12,share=e/Agent baza/2014 BAZA MAGRO.xlsm",
                    read_only=False, data_only=True)
 ws = wb['BAZA 2014']
 
